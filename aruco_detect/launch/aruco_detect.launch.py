@@ -5,9 +5,9 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
     return LaunchDescription([
-        DeclareLaunchArgument('camera', default_value='camera'),
-        DeclareLaunchArgument('image', default_value='image'),
-        DeclareLaunchArgument('transport', default_value='compressed'),
+        # Republish any misnamed camera images using /image_transport/republish
+
+        DeclareLaunchArgument('transport', default_value='raw'),
         DeclareLaunchArgument('fiducial_len', default_value='0.14'),
         DeclareLaunchArgument('dictionary', default_value='7'),
         DeclareLaunchArgument('do_pose_estimation', default_value='True'),
@@ -29,10 +29,5 @@ def generate_launch_description():
                 {"ignore_fiducials":LaunchConfiguration('ignore_fiducials')},
                 {"fiducial_len_override":LaunchConfiguration('fiducial_len_override')}
             ],
-            #Not sure if the remapping is working properly TODO
-            remappings=[
-                ('camera/compressed', [LaunchConfiguration('camera'), '/',LaunchConfiguration('image'), '/', LaunchConfiguration('transport')]),
-                ('camera_info', [LaunchConfiguration('camera'), '/camera_info']),
-            ]
         )
     ])
